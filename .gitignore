@@ -5,5 +5,7 @@ __pycache__/
 .env
 instance/*.sqlite3
 *.log
+*.pem
+dist/
 models/*.joblib
 models/*.pkl

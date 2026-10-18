@@ -1,0 +1,25 @@
+[Unit]
+Description=TriagePulse AI educational decision-support prototype
+After=network.target
+Wants=network.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=linux1
+Group=linux1
+WorkingDirectory=/home/linux1/triagepulse-ai
+EnvironmentFile=/etc/triagepulse.env
+Environment=PYTHONPATH=/home/linux1/triagepulse-ai/.venv/lib/python3.9/site-packages
+ExecStart=/usr/bin/python3 /home/linux1/triagepulse-ai/run.py
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/home/linux1/triagepulse-data
+
+[Install]
+WantedBy=multi-user.target
