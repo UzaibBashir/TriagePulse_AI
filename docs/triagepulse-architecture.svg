@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">TriagePulse AI solution architecture</title>
+  <desc id="desc">Architecture flow from a simulated observation in a browser dashboard through a Flask API, validation, versioned demonstration rules, transactional SQLite persistence, and dashboard API responses for human review. The backend runs on IBM LinuxONE RHEL 9.8 on s390x and is accessed through an SSH tunnel.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7f9fc"/><stop offset="1" stop-color="#edf3f7"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#087f83"/><stop offset="1" stop-color="#13a89e"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#18324b" flood-opacity=".09"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#7891a5"/></marker>
+    <marker id="arrowTeal" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#0c9692"/></marker>
+    <style>
+      text{font-family:Inter,'Segoe UI',Arial,sans-serif;fill:#1c3045}.title{font-size:37px;font-weight:750;letter-spacing:-.6px}.subtitle{font-size:16px;fill:#667b8f}.eyebrow{font-size:11px;font-weight:750;letter-spacing:1.7px;fill:#0b8585}.group-title{font-size:14px;font-weight:750;letter-spacing:.8px;fill:#31506a}.card-title{font-size:17px;font-weight:700}.body{font-size:13px;fill:#607489}.small{font-size:11px;fill:#71869a}.tag{font-size:10px;font-weight:700;letter-spacing:.6px}.step{font-size:10px;font-weight:800;fill:#fff}.footer-title{font-size:12px;font-weight:750;letter-spacing:.8px}.footer{font-size:12px;fill:#5f7388}.arrow-label{font-size:10px;font-weight:650;fill:#648095}
+    </style>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1600" height="9" fill="url(#accent)"/>
+
+  <text x="76" y="82" class="eyebrow">IBM Z DATATHON 2026 · REAL-TIME AI FOR CRITICAL DECISIONS</text>
+  <text x="76" y="134" class="title">TriagePulse AI</text>
+  <text x="76" y="166" class="subtitle">From simulated observation to explainable alert for human review</text>
+  <g transform="translate(1215 63)">
+    <rect width="310" height="73" rx="14" fill="#fff" stroke="#dce6ed"/>
+    <circle cx="30" cy="36" r="7" fill="#17a88f"/><circle cx="30" cy="36" r="13" fill="none" stroke="#bce8dc" stroke-width="2"/>
+    <text x="54" y="31" font-size="12" font-weight="750">DEPLOYED ON IBM LINUXONE</text>
+    <text x="54" y="51" class="small">RHEL 9.8 · s390x · SSH tunnel</text>
+  </g>
+
+  <!-- Trust boundary -->
+  <rect x="316" y="223" width="1208" height="600" rx="23" fill="#f9fbfd" stroke="#a9c8d0" stroke-width="2" stroke-dasharray="9 7"/>
+  <rect x="351" y="204" width="428" height="38" rx="19" fill="#e3f3f2" stroke="#c2e5e2"/>
+  <circle cx="372" cy="223" r="6" fill="#0b9790"/>
+  <text x="390" y="228" class="group-title">IBM LINUXONE VM · RHEL 9.8 · s390x</text>
+  <text x="1343" y="229" class="small" text-anchor="end">Private service boundary</text>
+
+  <!-- Browser / simulator -->
+  <g filter="url(#shadow)">
+    <rect x="64" y="350" width="220" height="234" rx="17" fill="#fff" stroke="#dce6ed"/>
+    <path d="M64 369a19 19 0 0 1 19-19h182a19 19 0 0 1 19 19v18H64z" fill="#eaf0f5"/>
+    <circle cx="84" cy="369" r="4" fill="#d58183"/><circle cx="99" cy="369" r="4" fill="#e5bd6f"/><circle cx="114" cy="369" r="4" fill="#65b89f"/>
+    <rect x="86" y="421" width="42" height="42" rx="12" fill="#e1f4f1"/>
+    <path d="M107 430v24m-12-12h24" stroke="#078b88" stroke-width="4" stroke-linecap="round"/>
+    <text x="85" y="493" class="card-title">Browser dashboard</text>
+    <text x="85" y="517" class="body">Vanilla HTML · CSS · JavaScript</text>
+    <rect x="84" y="535" width="81" height="24" rx="12" fill="#eef4f7"/><text x="124" y="551" class="tag" text-anchor="middle" fill="#60778b">MONITOR</text>
+    <rect x="172" y="535" width="89" height="24" rx="12" fill="#e6f5f3"/><text x="216" y="551" class="tag" text-anchor="middle" fill="#087f83">SIMULATE</text>
+  </g>
+
+  <!-- Main processing cards -->
+  <g filter="url(#shadow)">
+    <rect x="359" y="312" width="224" height="174" rx="16" fill="#fff" stroke="#d7e4ea"/>
+    <circle cx="385" cy="339" r="15" fill="#0b8e8e"/><text x="385" y="343" text-anchor="middle" class="step">01</text>
+    <text x="411" y="345" class="card-title">Flask ingestion API</text>
+    <text x="382" y="379" class="body">POST /observations</text>
+    <text x="382" y="402" class="body">Unique event ID · UTC timestamp</text>
+    <text x="382" y="425" class="body">Simulated record marker</text>
+    <rect x="382" y="447" width="115" height="22" rx="11" fill="#eef4f7"/><text x="440" y="462" class="tag" text-anchor="middle" fill="#577187">JSON · REST</text>
+
+    <rect x="626" y="312" width="224" height="174" rx="16" fill="#fff" stroke="#d7e4ea"/>
+    <circle cx="652" cy="339" r="15" fill="#0b8e8e"/><text x="652" y="343" text-anchor="middle" class="step">02</text>
+    <text x="678" y="345" class="card-title">Validate &amp; normalize</text>
+    <text x="649" y="379" class="body">Required fields and units</text>
+    <text x="649" y="402" class="body">Numeric values and input bounds</text>
+    <text x="649" y="425" class="body">Duplicates rejected safely</text>
+    <rect x="649" y="447" width="147" height="22" rx="11" fill="#fff3e5"/><text x="722" y="462" class="tag" text-anchor="middle" fill="#a56a20">INVALID ≠ CONCERNING</text>
+
+    <rect x="893" y="312" width="224" height="174" rx="16" fill="#fff" stroke="#d7e4ea"/>
+    <circle cx="919" cy="339" r="15" fill="#0b8e8e"/><text x="919" y="343" text-anchor="middle" class="step">03</text>
+    <text x="945" y="345" class="card-title">Demonstration rules</text>
+    <text x="916" y="379" class="body">Versioned, transparent checks</text>
+    <text x="916" y="402" class="body">Measurement values + rule IDs</text>
+    <text x="916" y="425" class="body">Human-readable explanations</text>
+    <rect x="916" y="447" width="164" height="22" rx="11" fill="#fff0ef"/><text x="998" y="462" class="tag" text-anchor="middle" fill="#a64951">NOT CLINICALLY VALIDATED</text>
+
+    <rect x="1160" y="312" width="305" height="174" rx="16" fill="#fff" stroke="#d7e4ea"/>
+    <circle cx="1186" cy="339" r="15" fill="#0b8e8e"/><text x="1186" y="343" text-anchor="middle" class="step">04</text>
+    <text x="1212" y="345" class="card-title">Persist atomically</text>
+    <text x="1183" y="379" class="body">SQLite · transaction protected</text>
+    <text x="1183" y="402" class="body">Observation + assessment</text>
+    <text x="1183" y="425" class="body">Optional alert + audit history</text>
+    <rect x="1183" y="447" width="180" height="22" rx="11" fill="#edf4fb"/><text x="1273" y="462" class="tag" text-anchor="middle" fill="#52708a">PERSISTENT VM STORAGE</text>
+  </g>
+
+  <!-- Main directional arrows -->
+  <path d="M284 405H347" fill="none" stroke="#0c9692" stroke-width="3" marker-end="url(#arrowTeal)"/>
+  <text x="315" y="391" class="arrow-label" text-anchor="middle">simulated event</text>
+  <path d="M583 399H614" fill="none" stroke="#7891a5" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M850 399H881" fill="none" stroke="#7891a5" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M1117 399H1148" fill="none" stroke="#7891a5" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Lower layer: dashboard API, storage, service -->
+  <g filter="url(#shadow)">
+    <rect x="386" y="565" width="320" height="155" rx="16" fill="#f1f8f8" stroke="#cce5e2"/>
+    <text x="412" y="600" class="card-title">Flask dashboard API</text>
+    <text x="412" y="628" class="body">Summary · patients · timelines</text>
+    <text x="412" y="651" class="body">Alert queue · acknowledgement</text>
+    <text x="412" y="682" class="small">HTTP polling · live backend data</text>
+
+    <rect x="778" y="565" width="320" height="155" rx="16" fill="#fff" stroke="#d7e4ea"/>
+    <path d="M804 599c0-10 60-10 60 0v72c0 10-60 10-60 0z" fill="#eaf4f5" stroke="#69aaa8" stroke-width="2"/>
+    <ellipse cx="834" cy="599" rx="30" ry="9" fill="#d9eeed" stroke="#69aaa8" stroke-width="2"/>
+    <path d="M804 620c0 11 60 11 60 0m-60 23c0 11 60 11 60 0" fill="none" stroke="#69aaa8" stroke-width="1.5"/>
+    <text x="884" y="604" class="card-title">SQLite database</text>
+    <text x="884" y="630" class="body">Patients · observations</text>
+    <text x="884" y="653" class="body">Assessments · alerts · audit</text>
+    <text x="884" y="682" class="small">/home/linux1/triagepulse-data/</text>
+
+    <rect x="1170" y="565" width="294" height="155" rx="16" fill="#fff" stroke="#d7e4ea"/>
+    <text x="1196" y="601" class="card-title">LinuxONE service</text>
+    <text x="1196" y="629" class="body">RHEL · systemd · Gunicorn</text>
+    <text x="1196" y="652" class="body">Loopback 127.0.0.1:8000</text>
+    <text x="1196" y="682" class="small">SSH tunnel · no public app port</text>
+  </g>
+
+  <!-- Storage and dashboard relationships -->
+  <path d="M1312 486V533" fill="none" stroke="#7891a5" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1323" y="520" class="arrow-label">commit records</text>
+  <path d="M1100 640H1158" fill="none" stroke="#7891a5" stroke-width="2.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="1128" y="624" class="arrow-label" text-anchor="middle">database reads</text>
+  <path d="M778 640H716" fill="none" stroke="#0c9692" stroke-width="2.5" marker-end="url(#arrowTeal)"/>
+  <text x="747" y="624" class="arrow-label" text-anchor="middle">API response</text>
+  <path d="M546 565V511H174V596" fill="none" stroke="#0c9692" stroke-width="2.4" stroke-dasharray="6 5" marker-end="url(#arrowTeal)"/>
+  <text x="364" y="502" class="arrow-label" text-anchor="middle">dashboard data + review actions</text>
+
+  <!-- Footer / safety -->
+  <rect x="64" y="859" width="1460" height="83" rx="16" fill="#142b43"/>
+  <circle cx="98" cy="900" r="17" fill="#0e9e98"/><path d="M98 889v22m-11-11h22" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <text x="130" y="891" class="footer-title" fill="#fff">HUMAN REVIEW STAYS IN CONTROL</text>
+  <text x="130" y="914" font-size="12" fill="#c1d0dc">Synthetic data only · software-defined categories · no diagnosis, prescription, or clinical validation</text>
+  <path d="M828 878v45" stroke="#3b5269"/>
+  <text x="857" y="891" class="footer-title" fill="#fff">MODEL STATUS</text>
+  <text x="857" y="914" font-size="12" fill="#c1d0dc">No outcome-labelled dataset configured; rules are active, no ML model is deployed</text>
+  <text x="1519" y="972" class="small" text-anchor="end">TriagePulse AI · Architecture overview</text>
+</svg>
