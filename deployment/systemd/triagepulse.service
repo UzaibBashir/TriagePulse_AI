@@ -12,7 +12,7 @@ Group=linux1
 WorkingDirectory=/home/linux1/triagepulse-ai
 EnvironmentFile=/etc/triagepulse.env
 Environment=PYTHONPATH=/home/linux1/triagepulse-ai/.venv/lib/python3.9/site-packages
-ExecStart=/usr/bin/python3 /home/linux1/triagepulse-ai/run.py
+ExecStart=/usr/bin/python3 -m gunicorn --workers 1 --bind 127.0.0.1:8000 --access-logfile - --error-logfile - run:app
 Restart=on-failure
 RestartSec=3
 UMask=0077
